@@ -1,3 +1,9 @@
-app-1  | 2026-11-16 21:10:49,516 listening port=8000 storage=sqlite
-app-1  | 2026-11-16 21:10:52,404 http 172.18.0.1 "GET / HTTP/1.1" 200 -
-{"greeting": "Привет из Docker", "count": 2, "hostname": "7c6755c4cc86", "storage": "sqlite"}
+app-1  | 2026-11-16 21:28:52,622 listening port=8000 storage=sqlite
+app-1  | 2026-11-16 21:28:55,546 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+app-1  | 2026-11-16 21:28:59,966 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+app-1  | 2026-11-16 21:29:13,926 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+{"greeting": "Hello, Docker!", "count": 2, "hostname": "72bb1f9008a8", "storage": "sqlite"}
+
+app-1  | 2026-11-16 21:29:41,436 listening port=8000 storage=sqlite
+app-1  | 2026-11-16 21:29:44,897 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+{"greeting": "Hello, Docker!", "count": 2, "hostname": "74d20b64d80e", "storage": "sqlite"}

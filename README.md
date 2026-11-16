@@ -28,3 +28,16 @@ docker compose ps
 docker compose stop
 docker compose start
 ```
+## Проверка
+```bash
+docker compose up -d
+curl -X POST http://localhost:8080/increment
+curl -X POST http://localhost:8080/increment
+curl http://localhost:8080/
+docker compose logs -f app
+docker compose down
+docker compose up -d
+curl http://localhost:8080/  # count должно быть 2
+docker compose logs -f app
+docker compose down
+```

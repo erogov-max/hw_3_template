@@ -2,9 +2,9 @@ services:
   app:
     build: .
     ports:
-      - "${APP_PORT:-8080}:8000"
+      - "${PORT:-8080}:8000"
     environment:
-      GREETING: "${APP_GREETING:-Hello, Docker!}"
+      GREETING: "${GREETING:-Hello, Docker!}"
     volumes:
       - app-data:/data
 
