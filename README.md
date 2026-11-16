@@ -15,3 +15,16 @@ docker logs <app_name>
 docker stop <app_name>
 docker rm <app_name>
 ```
+
+# 6
+## Команды
+(не просили но пусть будут)
+```bash
+docker compose up -d
+docker compose down
+docker compose down -v
+docker compose logs -f app
+docker compose ps
+docker compose stop
+docker compose start
+```
