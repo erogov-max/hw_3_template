@@ -41,3 +41,44 @@ curl http://localhost:8080/  # count должно быть 2
 docker compose logs -f app
 docker compose down
 ```
+
+# 8
+## Команды
+```bash
+docker compose stop redis
+docker compose start redis
+curl http://localhost:8080/readyz
+curl http://localhost:8080/healthz
+```
+
+## Сценарии
+### Сценарий 1: сохранение данных
+```bash
+docker compose up -d
+curl -X POST http://localhost:8080/increment
+curl -X POST http://localhost:8080/increment
+curl http://localhost:8080/
+docker compose logs -f app
+docker compose down
+docker compose up -d
+curl http://localhost:8080/  # count должно быть 2
+docker compose logs -f app
+docker compose down
+```
+### Сценарий 2: база упала
+```bash
+docker compose up -d
+curl -X POST http://localhost:8080/increment
+curl http://localhost:8080/readyz
+docker compose stop redis
+curl http://localhost:8080/healthz
+curl http://localhost:8080/readyz
+curl -X POST http://localhost:8080/increment
+```
+### Сценарий 3: база вернулась (после сценария 2)
+```bash
+docker compose start redis
+curl http://localhost:8080/readyz
+curl http://localhost:8080/
+curl -X POST http://localhost:8080/increment
+```

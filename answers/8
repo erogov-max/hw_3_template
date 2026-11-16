@@ -1,0 +1,35 @@
+plot 1:
+app-1  | 2026-11-16 22:17:18,251 listening port=8000 storage=redis
+app-1  | 2026-11-16 22:17:26,336 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+app-1  | 2026-11-16 22:17:29,785 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+app-1  | 2026-11-16 22:17:41,536 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+{"greeting": "Hello, Docker!", "count": 2, "hostname": "2d1614286cbc", "storage": "redis"}\
+# recreated
+app-1  | 2026-11-16 22:19:43,541 listening port=8000 storage=redis
+app-1  | 2026-11-16 22:19:49,230 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+{"greeting": "Hello, Docker!", "count": 2, "hostname": "1aaf429366d7", "storage": "redis"}
+
+plot 2:
+app-1  | 2026-11-16 22:21:08,012 listening port=8000 storage=redis
+app-1  | 2026-11-16 22:21:56,928 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+{"greeting": "Hello, Docker!", "count": 1, "hostname": "e47cd99c1743", "storage": "redis"}
+app-1  | 2026-11-16 22:22:08,825 http 172.18.0.1 "GET /readyz HTTP/1.1" 200 -
+{"status": "ready", "storage": "redis"}
+# redis stopped
+app-1  | 2026-11-16 22:23:43,113 http 172.18.0.1 "GET /healthz HTTP/1.1" 200 -
+{"status": "alive"}
+app-1  | 2026-11-16 22:23:54,713 storage_unavailable: ConnectionError
+app-1  | 2026-11-16 22:23:54,713 http 172.18.0.1 "GET /readyz HTTP/1.1" 503 -
+{"error": "storage_unavailable"}
+app-1  | 2026-11-16 22:24:08,499 storage_unavailable: ConnectionError
+app-1  | 2026-11-16 22:24:08,500 http 172.18.0.1 "POST /increment HTTP/1.1" 503 -
+{"error": "storage_unavailable"}
+
+plot 3: (right after plot 2)
+# redis started again
+app-1  | 2026-11-16 22:25:51,813 http 172.18.0.1 "GET /readyz HTTP/1.1" 200 -
+{"status": "ready", "storage": "redis"}
+app-1  | 2026-11-16 22:25:59,780 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+{"greeting": "Hello, Docker!", "count": 1, "hostname": "e47cd99c1743", "storage": "redis"}
+app-1  | 2026-11-16 22:26:09,863 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+{"greeting": "Hello, Docker!", "count": 2, "hostname": "e47cd99c1743", "storage": "redis"}

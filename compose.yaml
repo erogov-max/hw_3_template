@@ -5,8 +5,30 @@ services:
       - "${PORT:-8080}:8000"
     environment:
       GREETING: "${GREETING:-Hello, Docker!}"
+      STORAGE: "${STORAGE:-sqlite}"
+      REDIS_URL: "${REDIS_URL:-redis://redis:6379/0}"
     volumes:
       - app-data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - app-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
 
 volumes:
   app-data:
